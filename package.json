@@ -1,0 +1,59 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "lerna run build --stream",
+    "clean": "lerna run clean --stream && rimraf node_modules docs",
+    "deploy:version": "lerna version",
+    "deploy:publish": "lerna publish",
+    "docs": "typedoc",
+    "docs:check": "typedoc --emit none",
+    "fix": "lerna run fix --stream",
+    "lint": "lerna run lint --stream",
+    "lint:staged": "lint-staged",
+    "postinstall": "husky install",
+    "test": "lerna run test --stream",
+    "test:examples": "jest --env=jsdom --coverage=false examples",
+    "test:unit": "lerna run test --stream --ignore @coxwave/analytics-*-test",
+    "test:e2e": "lerna run test --stream --scope @coxwave/analytics-*-test",
+    "version": "git add -A"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
+    "@types/jest": "^29.2.4",
+    "@types/node": "^18.11.14",
+    "@typescript-eslint/eslint-plugin": "^5.46.1",
+    "@typescript-eslint/parser": "^5.46.1",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^8.29.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-node": "^0.3.7",
+    "eslint-import-resolver-typescript": "^3.5.3",
+    "eslint-plugin-import": "^2.27.4",
+    "eslint-plugin-jest": "^27.1.6",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "husky": "^8.0.2",
+    "jest": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
+    "lerna": "^6.1.0",
+    "lint-staged": "^13.1.0",
+    "prettier": "^2.8.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^29.0.3",
+    "typedoc": "^0.23.22",
+    "typescript": "^4.9.4"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "tslib": "^2.4.1"
+  }
+}

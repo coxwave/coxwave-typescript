@@ -1,0 +1,10 @@
+{
+  "entryPoints": [
+    "packages/analytics-browser",
+  ],
+  "entryPointStrategy": "packages",
+  "logLevel": "Error",
+  "name": "Coxwave-Analytics SDK",
+  "out": "docs",
+  "readme": "./README.md"
+}

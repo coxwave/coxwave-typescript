@@ -1,0 +1,76 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "command": {
+    "version": {
+      "allowBranch": "main",
+      "conventionalCommits": true,
+      "createRelease": "github",
+      "message": "chore(release): publish",
+      "preid": "beta",
+      "changelogPreset": {
+        "types": [
+          {
+            "type": "feat",
+            "section": ":rocket: Features",
+            "hidden": false
+          },
+          {
+            "type": "fix",
+            "section": ":bug: Bug Fixes",
+            "hidden": false
+          },
+          {
+            "type": "perf",
+            "section": ":zap: Performance Improvements",
+            "hidden": false
+          },
+          {
+            "type": "revert",
+            "section": ":rewind: Reverts",
+            "hidden": false
+          },
+          {
+            "type": "chore",
+            "section": ":wrench: Chores",
+            "hidden": false
+          },
+          {
+            "type": "docs",
+            "section": ":memo: Documentation",
+            "hidden": false
+          },
+          {
+            "type": "style",
+            "section": ":art: Styles",
+            "hidden": false
+          },
+          {
+            "type": "refactor",
+            "section": ":recycle: Refactors",
+            "hidden": false
+          },
+          {
+            "type": "test",
+            "section": ":white_check_mark: Tests",
+            "hidden": false
+          },
+          {
+            "type": "ci",
+            "section": ":green_heart: CI",
+            "hidden": false
+          },
+          {
+            "type": "build",
+            "section": ":hammer: Builds",
+            "hidden": false
+          }
+        ]
+      }
+    }
+  }
+}
