@@ -47,7 +47,7 @@ export interface BaseClient {
    * track('Page Load', { loadTime: 1000 });
    *
    * // activity tracking with activity name, additional activity properties and predefinedProperties
-   * track('Page Load', { loadTime: 1000 }, { userId: "joowon.kim" });
+   * track('Page Load', { loadTime: 1000 }, { $userId: "joowon.kim" });
    *
    * // alternatively, this method is awaitable
    * const result = await track('Page Load').promise;
@@ -85,7 +85,7 @@ export interface BaseClient {
    *    input: { foo: { type: "text", value: "hello world" }},
    *    output: { bar: { type: "text", value: "hello world" }}
    *  },
-   *  { userId: "joowon.kim" }
+   *  { $userId: "joowon.kim" }
    * );
    *
    * // alternatively, this method is awaitable
@@ -112,7 +112,7 @@ export interface BaseClient {
    * feedback('rating', { generationId: <generation_id>, score: 5 });
    *
    * // feedback feedback with generation_id, feedback name, additional feedback properties, and PredefinedEventProperties
-   * feedback('rating', { generationId: <generation_id>, score: 5 }, { userId: "joowon.kim" });
+   * feedback('rating', { generationId: <generation_id>, score: 5 }, { $userId: "joowon.kim" });
    *
    * // alternatively, this method is awaitable
    * const result = await feedback('Thumbs-Up', { generationId: <generation_id> }).promise;
@@ -148,7 +148,12 @@ export interface BaseClient {
    * ```typescript
    * const id = new Identify();
    * id.set('colors', ['rose', 'gold']);
-   * id.set('colors', ['$city', 'Seoul']);
+   *
+   * // identify with user identity
+   * identify("joowon.kim", id);
+   *
+   * // identify with user identity and predefined properties
+   * identify("joowon.kim", id, { $userId: "joowon.kim" });
    *
    * // alternatively, this tracking method is awaitable
    * const result = await identify("joowon.kim", id).promise;
