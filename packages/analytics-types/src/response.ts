@@ -34,40 +34,42 @@ export interface RateLimitBody {
   throttledEvents: number[];
 }
 
-export interface SuccessResponse {
-  status: TStatus['Success'];
+export interface BaseResponse {
+  status: TStatus;
+  statusCode: number;
+  body?: Record<string, any>;
+}
+
+export interface SuccessResponse extends BaseResponse {
+  status: 'success';
   statusCode: number;
   body: SuccessBody;
 }
 
-export interface InvalidResponse {
-  status: TStatus['Invalid'];
+export interface InvalidResponse extends BaseResponse {
+  status: 'invalid';
   statusCode: number;
   body: InvalidRequestBody;
 }
 
-export interface PayloadTooLargeResponse {
-  status: TStatus['PayloadTooLarge'];
+export interface PayloadTooLargeResponse extends BaseResponse {
+  status: 'payload_too_large';
   statusCode: number;
   body: PayloadTooLargeBody;
 }
 
-export interface RateLimitResponse {
-  status: TStatus['RateLimit'];
+export interface RateLimitResponse extends BaseResponse {
+  status: 'rate_limit';
   statusCode: number;
   body: RateLimitBody;
 }
 
-export interface TimeoutResponse {
-  status: TStatus['Timeout'];
+export interface TimeoutResponse extends BaseResponse {
+  status: 'timeout';
   statusCode: number;
 }
 
-export type StatusWithResponseBody =
-  | TStatus['Invalid']
-  | TStatus['PayloadTooLarge']
-  | TStatus['RateLimit']
-  | TStatus['Success'];
+export type StatusWithResponseBody = 'invalid' | 'payload_too_large' | 'rate_limit' | 'success';
 
 export interface OtherReponse {
   status: Exclude<TStatus, StatusWithResponseBody>;

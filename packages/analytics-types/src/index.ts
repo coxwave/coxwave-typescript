@@ -64,7 +64,14 @@ export {
   TPluginCoverage,
 } from './plugin';
 export { Result } from './result';
-export { Response, SuccessResponse, InvalidResponse, PayloadTooLargeResponse, RateLimitResponse } from './response';
+export {
+  Response,
+  BaseResponse,
+  SuccessResponse,
+  InvalidResponse,
+  PayloadTooLargeResponse,
+  RateLimitResponse,
+} from './response';
 export { SessionManager, SessionManagerOptions, UserSession } from './session-manager';
 export { Status, TStatus } from './status';
 export { CookieStorageOptions, Storage } from './storage';
