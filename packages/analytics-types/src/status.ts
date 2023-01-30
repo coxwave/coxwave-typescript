@@ -15,9 +15,9 @@ export const Status = {
   /** A server-side error ocurred during submission. */
   Failed: 'failed',
   /** a server or client side error occuring when a request takes too long and is cancelled */
-  Timeout: 'Timeout',
+  Timeout: 'timeout',
   /** NodeJS runtime environment error.. E.g. disconnected from network */
-  SystemError: 'SystemError',
+  SystemError: 'system_error',
 } as const;
 
-export type TStatus = typeof Status;
+export type TStatus = (typeof Status)[keyof typeof Status];
