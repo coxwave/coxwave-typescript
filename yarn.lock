@@ -1425,6 +1425,11 @@
   dependencies:
     chalk "^4.1.0"
 
+"@coxwave/ua-parser-js@^0.7.33":
+  version "0.7.33"
+  resolved "https://registry.yarnpkg.com/@coxwave/ua-parser-js/-/ua-parser-js-0.7.33.tgz#4e7f00dbbe1a31fd957d7eb0ce8400926d2fa21a"
+  integrity sha512-f4ob2MXj+c1VQflahuR0Ea/o7Hr44VsLfb72R71SyQQl3GhVUqln1xY0byJM7iI7fiAMOlIoL9JDK1r12rktPg==
+
 "@cspotcode/source-map-support@^0.8.0":
   version "0.8.1"
   resolved "https://registry.yarnpkg.com/@cspotcode/source-map-support/-/source-map-support-0.8.1.tgz#00629c35a688e05a88b1cda684fb9d5e73f000a1"
