@@ -24,7 +24,7 @@ import {
   SUCCESS_MESSAGE,
   UNEXPECTED_ERROR_MESSAGE,
 } from '../../messages';
-import { getStorageName } from '../../storage/names';
+import { getStorageName } from '../../storage/storage-name';
 import { chunk } from '../../utils/chunk';
 import { buildResult } from '../../utils/result-builder';
 
