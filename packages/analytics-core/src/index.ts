@@ -13,6 +13,6 @@ export { returnWrapper } from './utils/return-wrapper';
 export { debugWrapper, getClientLogConfig, getClientStates } from './utils/debug';
 export { UUID } from './utils/uuid';
 export { MemoryStorage } from './storage/memory';
-export { getStorageName } from './storage/storage-name';
+export { getCookieName, getStorageName } from './storage/storage-name';
 export { BaseTransport } from './transports/base';
 export { createIdentifyUserEvent } from './utils/event-builder';

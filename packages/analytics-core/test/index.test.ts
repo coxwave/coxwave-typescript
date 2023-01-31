@@ -14,6 +14,7 @@ import {
   getClientStates,
   UUID,
   MemoryStorage,
+  getCookieName,
   getStorageName,
   createIdentifyUserEvent,
 } from '../src/index';
@@ -42,6 +43,7 @@ describe('index', () => {
     expect(typeof getClientStates).toBe('function');
     expect(typeof UUID).toBe('function');
     expect(typeof MemoryStorage).toBe('function');
+    expect(typeof getCookieName).toBe('function');
     expect(typeof getStorageName).toBe('function');
     expect(typeof createIdentifyUserEvent).toBe('function');
     expect(COXWAVE_PREFIX).toBe('COX');

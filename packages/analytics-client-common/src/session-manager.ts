@@ -1,4 +1,4 @@
-import { COXWAVE_PREFIX, getStorageName } from '@coxwave/analytics-core';
+import { getCookieName } from '@coxwave/analytics-core';
 import { UserSession, Storage, SessionManager as ISessionManager } from '@coxwave/analytics-types';
 
 export class SessionManager implements ISessionManager {
@@ -6,7 +6,7 @@ export class SessionManager implements ISessionManager {
   cache: UserSession;
 
   constructor(private storage: Storage<UserSession>, projectToken: string) {
-    this.storageKey = getStorageName(projectToken, COXWAVE_PREFIX);
+    this.storageKey = getCookieName(projectToken);
     this.cache = { optOut: false };
   }
 
