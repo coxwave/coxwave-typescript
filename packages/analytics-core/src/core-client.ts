@@ -8,6 +8,7 @@ import {
   ActivityProperties,
   GenerationProperties,
   FeedbackProperties,
+  PredefinedProperties,
 } from '@coxwave/analytics-types';
 
 import { CLIENT_NOT_INITIALIZED, OPT_OUT_MESSAGE } from './messages';
@@ -21,8 +22,6 @@ import {
   createIdentifyAliasEvent,
 } from './utils/event-builder';
 import { buildResult } from './utils/result-builder';
-
-import { PredefinedProperties } from '../../analytics-types/lib/esm/events/base-event';
 
 export class CoxwaveCore<T extends Config> implements CoreClient<T> {
   initializing = false;
