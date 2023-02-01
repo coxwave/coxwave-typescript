@@ -1,7 +1,7 @@
 import { AvailableEventType, Event } from '@coxwave/analytics-types';
 
 import { Context } from '../../src/plugins/context';
-import { useDefaultConfig } from '../helpers/default';
+import { DISTINCT_ID, useDefaultConfig } from '../helpers/default';
 
 describe('context', () => {
   describe('setup', () => {
@@ -28,6 +28,7 @@ describe('context', () => {
       const context = new Context();
       jest.spyOn(context, 'isSessionValid').mockReturnValue(true);
       const config = useDefaultConfig('user@coxwave.com', {
+        distinctId: DISTINCT_ID,
         deviceId: 'deviceId',
         sessionId: 1,
       });
@@ -40,8 +41,8 @@ describe('context', () => {
         eventName: 'eventName',
       };
       const firstContextEvent = await context.execute(event);
+      expect(firstContextEvent.eventName).toEqual('eventName');
       expect(firstContextEvent.properties?.$appVersion).toEqual('1.0.0');
-      expect(firstContextEvent.properties?.$eventName).toEqual('eventName');
       expect(firstContextEvent.properties?.$platform).toEqual('Web');
       expect(firstContextEvent.properties?.$osName).toBeDefined();
       expect(firstContextEvent.properties?.$osVersion).toBeDefined();
@@ -58,6 +59,7 @@ describe('context', () => {
       const context = new Context();
       jest.spyOn(context, 'isSessionValid').mockReturnValue(true);
       const config = useDefaultConfig('user@coxwave.com', {
+        distinctId: DISTINCT_ID,
         deviceId: 'deviceId',
         sessionId: 1,
         trackingOptions: {
@@ -79,15 +81,15 @@ describe('context', () => {
         eventName: 'eventName',
       };
       const firstContextEvent = await context.execute(event);
+      expect(firstContextEvent.eventName).toEqual('eventName');
       expect(firstContextEvent.properties?.$appVersion).toEqual('1.0.0');
-      expect(firstContextEvent.properties?.$eventName).toEqual('eventName');
       expect(firstContextEvent.properties?.$platform).toBeUndefined();
       expect(firstContextEvent.properties?.$osName).toBeUndefined();
       expect(firstContextEvent.properties?.$osVersion).toBeUndefined();
       expect(firstContextEvent.properties?.$language).toBeUndefined();
+      expect(firstContextEvent.properties?.$ip).toBeUndefined();
       expect(firstContextEvent.properties?.$distinctId).toBeDefined();
       expect(firstContextEvent.properties?.$time).toBeDefined();
-      expect(firstContextEvent.properties?.$ip).toEqual('$remote');
       expect(firstContextEvent.properties?.$deviceId).toEqual('deviceId');
       expect(firstContextEvent.properties?.$sessionId).toEqual(1);
       expect(firstContextEvent.properties?.$userId).toEqual('user@coxwave.com');
@@ -107,11 +109,11 @@ describe('context', () => {
         id: 'uuid',
         eventType: AvailableEventType.TRACK,
         eventName: 'eventName',
-        device_id: 'new deviceId',
+        properties: { $deviceId: 'new deviceId' },
       };
       const firstContextEvent = await context.execute(event);
+      expect(firstContextEvent.eventName).toEqual('eventName');
       expect(firstContextEvent.properties?.$appVersion).toEqual('1.0.0');
-      expect(firstContextEvent.properties?.$eventName).toEqual('eventName');
       expect(firstContextEvent.properties?.$deviceId).toEqual('new deviceId');
     });
 

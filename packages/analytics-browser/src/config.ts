@@ -155,10 +155,11 @@ export const useBrowserConfig = async (projectToken: string, options?: BrowserOp
     sessionManager,
     distinctId: createDistinctId(cookies?.distinctId),
     deviceId: createDeviceId(cookies?.deviceId, options?.deviceId, queryParams.deviceId),
+    userId: cookies?.userId ?? options?.userId,
     domain,
     optOut: options?.optOut ?? Boolean(cookies?.optOut),
     sessionId: cookies?.sessionId ?? options?.sessionId,
-    threadId: cookies?.threadId ?? options?.threadId,
+    threadId: createThreadId(cookies?.threadId, options?.threadId, queryParams.threadId),
     storageProvider: await createEventsStorage(options),
     trackingOptions: { ...defaultConfig.trackingOptions, ...options?.trackingOptions },
     transportProvider: options?.transportProvider ?? createTransport(options?.transport),
@@ -215,6 +216,10 @@ export const createDistinctId = (idFromCookies?: string) => {
 };
 
 export const createDeviceId = (idFromCookies?: string, idFromOptions?: string, idFromQueryParams?: string) => {
+  return idFromOptions || idFromQueryParams || idFromCookies || UUID();
+};
+
+export const createThreadId = (idFromCookies?: string, idFromOptions?: string, idFromQueryParams?: string) => {
   return idFromOptions || idFromQueryParams || idFromCookies || UUID();
 };
 

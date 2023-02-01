@@ -42,7 +42,7 @@ describe('xhr', () => {
       const response = await unresolvedResponse;
       expect(response).toBe(result);
       expect(open).toHaveBeenCalledWith('POST', url, true);
-      expect(setRequestHeader).toHaveBeenCalledTimes(2);
+      expect(setRequestHeader).toHaveBeenCalledTimes(3);
       expect(send).toHaveBeenCalledTimes(1);
       expect(send).toHaveBeenCalledWith(JSON.stringify(payload));
     });
@@ -73,7 +73,7 @@ describe('xhr', () => {
       mock.onreadystatechange && mock.onreadystatechange(new Event(''));
       await expect(unresolvedResponse).rejects.toThrow('Unexpected end of JSON input');
       expect(open).toHaveBeenCalledWith('POST', url, true);
-      expect(setRequestHeader).toHaveBeenCalledTimes(2);
+      expect(setRequestHeader).toHaveBeenCalledTimes(3);
       expect(send).toHaveBeenCalledTimes(1);
       expect(send).toHaveBeenCalledWith(JSON.stringify(payload));
     });

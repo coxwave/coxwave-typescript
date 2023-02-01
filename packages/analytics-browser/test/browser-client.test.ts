@@ -15,7 +15,7 @@ describe('browser-client', () => {
 
   afterEach(() => {
     // clean up cookies
-    document.cookie = 'AMP_PROJECT_TOKEN=null; expires=-1';
+    document.cookie = 'COX_PROJECT_TOKEN=null; expires=-1';
   });
 
   describe('init', () => {

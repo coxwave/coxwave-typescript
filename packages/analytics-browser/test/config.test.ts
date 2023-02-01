@@ -3,6 +3,8 @@ import { SessionManager, FetchTransport } from '@coxwave/analytics-client-common
 import * as core from '@coxwave/analytics-core';
 import { LogLevel, Storage, TransportType, UserSession } from '@coxwave/analytics-types';
 
+import { DISTINCT_ID } from './helpers/default';
+
 import * as Config from '../src/config';
 import { createTransport } from '../src/config';
 import * as LocalStorageModule from '../src/storage/local-storage';
@@ -20,6 +22,8 @@ describe('config', () => {
         optOut: false,
         sessionId: undefined,
         userId: undefined,
+        distinctId: undefined,
+        threadId: undefined,
       });
       const sessionManager = await new SessionManager(cookieStorage, '').load();
       const logger = new core.Logger();
@@ -32,7 +36,6 @@ describe('config', () => {
         cookieExpiration: 365,
         cookieSameSite: 'Lax',
         cookieSecure: false,
-        cookieUpgrade: true,
         disableCookies: false,
         domain: '',
         flushIntervalMillis: 1000,
@@ -40,12 +43,8 @@ describe('config', () => {
         flushQueueSize: 30,
         loggerProvider: logger,
         logLevel: LogLevel.Warn,
-        minIdLength: undefined,
         _optOut: false,
-        partnerId: undefined,
-        plan: undefined,
-        ingestionMetadata: undefined,
-        serverUrl: 'https://api2.amplitude.com/2/httpapi',
+        serverUrl: 'https://ingest-dev.coxwave.com',
         serverZone: 'US',
         sessionManager,
         sessionTimeout: 1800000,
@@ -69,16 +68,20 @@ describe('config', () => {
     test('should create default config', async () => {
       const cookieStorage = new core.MemoryStorage<UserSession>();
       await cookieStorage.set(core.getCookieName(PROJECT_TOKEN), {
+        distinctId: DISTINCT_ID,
         deviceId: 'deviceId',
         lastEventTime: undefined,
         optOut: false,
         sessionId: undefined,
         userId: undefined,
+        threadId: 'threadId',
       });
       const sessionManager = await new SessionManager(cookieStorage, PROJECT_TOKEN).load();
       jest.spyOn(Config, 'createCookieStorage').mockResolvedValueOnce(new core.MemoryStorage());
       jest.spyOn(Config, 'createEventsStorage').mockResolvedValueOnce(new core.MemoryStorage());
       jest.spyOn(Config, 'createDeviceId').mockReturnValueOnce('deviceId');
+      jest.spyOn(Config, 'createDistinctId').mockReturnValueOnce(DISTINCT_ID);
+      jest.spyOn(Config, 'createThreadId').mockReturnValueOnce('threadId');
       const logger = new core.Logger();
       logger.enable(LogLevel.Warn);
       const config = await Config.useBrowserConfig(PROJECT_TOKEN, undefined);
@@ -89,7 +92,6 @@ describe('config', () => {
         cookieExpiration: 365,
         cookieSameSite: 'Lax',
         cookieSecure: false,
-        cookieUpgrade: true,
         disableCookies: false,
         domain: '',
         flushIntervalMillis: 1000,
@@ -97,12 +99,8 @@ describe('config', () => {
         flushQueueSize: 30,
         loggerProvider: logger,
         logLevel: LogLevel.Warn,
-        minIdLength: undefined,
         _optOut: false,
-        partnerId: undefined,
-        plan: undefined,
-        ingestionMetadata: undefined,
-        serverUrl: 'https://api2.amplitude.com/2/httpapi',
+        serverUrl: 'https://ingest-dev.coxwave.com',
         serverZone: 'US',
         sessionManager,
         sessionTimeout: 1800000,
@@ -126,14 +124,18 @@ describe('config', () => {
       await cookieStorage.set(core.getCookieName(PROJECT_TOKEN), {
         deviceId: 'deviceIdFromCookies',
         lastEventTime: Date.now(),
+        distinctId: DISTINCT_ID,
         sessionId: undefined,
         userId: 'userIdFromCookies',
+        threadId: 'threadIdFromCookies',
         optOut: false,
       });
       const sessionManager = await new SessionManager(cookieStorage, PROJECT_TOKEN).load();
       jest.spyOn(Config, 'createCookieStorage').mockResolvedValueOnce(cookieStorage);
       jest.spyOn(Config, 'createEventsStorage').mockResolvedValueOnce(new core.MemoryStorage());
       jest.spyOn(Config, 'createDeviceId').mockReturnValueOnce('deviceIdFromCookies');
+      jest.spyOn(Config, 'createDistinctId').mockReturnValueOnce(DISTINCT_ID);
+      jest.spyOn(Config, 'createThreadId').mockReturnValueOnce('threadIdFromCookies');
       const logger = new core.Logger();
       logger.enable(LogLevel.Warn);
       const config = await Config.useBrowserConfig(PROJECT_TOKEN, {
@@ -154,7 +156,7 @@ describe('config', () => {
         loggerProvider: logger,
         logLevel: LogLevel.Warn,
         _optOut: false,
-        serverUrl: 'https://api2.amplitude.com/2/httpapi',
+        serverUrl: 'https://ingest-dev.coxwave.com',
         serverZone: 'US',
         sessionManager,
         sessionTimeout: 1,
