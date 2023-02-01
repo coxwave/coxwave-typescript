@@ -7,9 +7,11 @@ import { BrowserConfig } from '../../src/config';
 export const useDefaultConfig = (userId?: string, overrides?: Partial<InitOptions<BrowserConfig>>) =>
   new BrowserConfig(PROJECT_TOKEN, { userId: userId || USER_ID, ...DEFAULT_OPTIONS, ...overrides });
 
-export const PROJECT_TOKEN = 'projectToken';
+export const PROJECT_TOKEN = 'PROJECT_TOKEN';
 export const DISTINCT_ID = 'distinctId';
-export const USER_ID = 'userId';
+export const USER_ID = 'USER_ID';
+export const THREAD_ID = 'threadId';
+export const DEVICE_ID = 'DEVICE_ID';
 
 const cookieStorage = new MemoryStorage<UserSession>();
 
