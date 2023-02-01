@@ -33,7 +33,6 @@ describe('config', () => {
       storageProvider: defaultConfig.storageProvider,
       transportProvider: defaultConfig.transportProvider,
       useBatch: false,
-      library: undefined,
     });
     expect(config.optOut).toBe(false);
   });
@@ -43,7 +42,6 @@ describe('config', () => {
     const config = new Config({
       projectToken: PROJECT_TOKEN,
       logLevel: LogLevel.Verbose,
-      library: 'test-library',
       optOut: true,
       storageProvider: defaultConfig.storageProvider,
       transportProvider: defaultConfig.transportProvider,
@@ -62,7 +60,6 @@ describe('config', () => {
       storageProvider: defaultConfig.storageProvider,
       transportProvider: defaultConfig.transportProvider,
       useBatch: true,
-      library: 'test-library',
     });
   });
 
