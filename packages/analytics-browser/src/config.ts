@@ -153,7 +153,7 @@ export const useBrowserConfig = async (projectToken: string, options?: BrowserOp
     ...options,
     cookieStorage,
     sessionManager,
-    distinctId: createDistinctId(cookies?.distinctId),
+    distinctId: createDistinctId(cookies?.distinctId, options?.distinctId),
     deviceId: createDeviceId(cookies?.deviceId, options?.deviceId, queryParams.deviceId),
     userId: cookies?.userId ?? options?.userId,
     domain,
@@ -211,8 +211,8 @@ export const createEventsStorage = async (overrides?: BrowserOptions): Promise<S
   return undefined;
 };
 
-export const createDistinctId = (idFromCookies?: string) => {
-  return idFromCookies || UUID();
+export const createDistinctId = (idFromCookies?: string, idFromOptions?: string) => {
+  return idFromOptions || idFromCookies || UUID();
 };
 
 export const createDeviceId = (idFromCookies?: string, idFromOptions?: string, idFromQueryParams?: string) => {

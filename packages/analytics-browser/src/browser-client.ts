@@ -35,6 +35,7 @@ export class CoxwaveBrowser extends CoxwaveCore<BrowserConfig> {
     // Step 1: Create browser config
     const browserOptions = await useBrowserConfig(projectToken, {
       ...options,
+      // TODO: need to check this overwrites are okay or not
       userId: options?.userId,
       deviceId: options?.deviceId,
       sessionId: options?.sessionId,
@@ -43,9 +44,6 @@ export class CoxwaveBrowser extends CoxwaveCore<BrowserConfig> {
 
     // Step 2: BrowserConfig setups
     await super._init(browserOptions);
-    if (!this.config.distinctId) {
-      throw new Error('DistinctId is not set');
-    }
 
     // Step 3: Manage session
     if (
@@ -114,6 +112,7 @@ export class CoxwaveBrowser extends CoxwaveCore<BrowserConfig> {
     this.setDistinctId(UUID());
     this.setUserId(undefined);
     this.setDeviceId(UUID());
+    this.resetThreadId();
   }
 
   getSessionId() {
@@ -155,29 +154,21 @@ export class CoxwaveBrowser extends CoxwaveCore<BrowserConfig> {
   }
 
   register() {
-    if (!this.config) {
-      this.q.push(this.register.bind(this));
-    }
     const distinctId = this.getDistinctId() as string;
     return super.register(distinctId);
   }
 
-  identify(alias?: string, identify?: IIdentify): Promise<Result> {
+  identify(alias: string, identify?: IIdentify): Promise<Result> {
     if (isInstanceProxy(identify)) {
       const queue = identify._q;
       identify._q = [];
       identify = convertProxyObjectToRealObject(new Identify(), queue);
     }
 
-    alias = alias || this.getUserId();
-    if (alias === undefined) {
-      throw new Error("alias is not set. Please set alias in identify() or in the constructor's options.");
-    } else {
-      this.setUserId(alias);
-    }
+    this.setUserId(alias);
 
     const updateDistinctIdCallback = (result: Result) => {
-      const newId = result?.body?.distinctId as string;
+      const newId = result.body.distinctId as string;
       if (newId) this.setDistinctId(newId);
       return result;
     };
@@ -188,10 +179,6 @@ export class CoxwaveBrowser extends CoxwaveCore<BrowserConfig> {
   }
 
   alias(alias: string) {
-    if (!this.config) {
-      this.q.push(this.alias.bind(this, alias));
-    }
-
     const distinctId = this.getDistinctId() as string;
     return super.alias(alias, distinctId);
   }
